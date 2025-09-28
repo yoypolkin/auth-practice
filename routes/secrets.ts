@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { secrets } from '../controllers/secrets.js';
+import { getSecretsPage } from '../controllers/secrets.js';
 
 const router = Router();
 
-router.get('/', secrets);
+router.get('/', getSecretsPage);
 
 export default router;

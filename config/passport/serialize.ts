@@ -1,4 +1,4 @@
-import { AppUser } from '../../types/user.js';
+import { SessionUser } from '../../types/user.js';
 import { findUserById } from '../../user-entity-manager/find-user-by-id.js';
 
 // Used by login() to save user to the session
@@ -13,14 +13,14 @@ export function serializeUser(
 // Used by passport.session() to read the user data.
 export async function deserializeUser(
   id: string,
-  done: (err: any, user?: AppUser | false | undefined | null) => void
+  done: (err: any, user?: SessionUser | false | undefined | null) => void
 ) {
   console.log('Inside deserialize');
   try {
     const user = await findUserById(id);
 
     if (user && user.id) {
-      done(null, user);
+      done(null, { id: user.id, email: user.email });
     } else {
       done(null, false);
     }

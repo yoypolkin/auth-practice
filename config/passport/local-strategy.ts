@@ -1,6 +1,7 @@
 import { Strategy } from 'passport-local';
 import * as bcrypt from 'bcrypt';
 import { findUserByEmail } from '../../user-entity-manager/find-user-by-email.js';
+import { SessionUser } from '../../types/user.js';
 
 /**
  * Being called by passport.authenticate()
@@ -23,13 +24,17 @@ export const localStrategy = new Strategy(async function verify(
 
     if (user && user.password) {
       const storedHashedPassword = String(user.password);
+      const existingUser: SessionUser = {
+        id: user.id,
+        email: user.email,
+      } as const;
 
       bcrypt.compare(password, storedHashedPassword, (err, result) => {
         if (err) {
           return cb(err);
         } else {
           if (result) {
-            return cb(null, user);
+            return cb(null, existingUser);
           } else {
             return cb(null, false);
           }

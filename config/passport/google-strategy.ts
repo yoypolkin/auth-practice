@@ -2,6 +2,7 @@ import { Strategy } from 'passport-google-oauth20';
 import { findUserByEmail } from '../../user-entity-manager/find-user-by-email.js';
 import { createUser } from '../../user-entity-manager/create-user.js';
 import dotenv from 'dotenv';
+import { SessionUser } from '../../types/user.js';
 
 dotenv.config();
 
@@ -48,10 +49,11 @@ export const googleStrategy = new Strategy(
         const user = await findUserByEmail(email);
 
         if (user) {
-          verify(null, user);
+          const existingUser: SessionUser = { id: user.id, email: user.email };
+          verify(null, existingUser);
         } else {
           const newUser = await createUser(email, profileId);
-          verify(null, newUser);
+          verify(null, { id: newUser.id, email: newUser.email });
         }
       } else {
         console.log('No email was found during google auth!');

@@ -39,7 +39,7 @@ export function googleAuthCallback(
   next: NextFunction
 ) {
   // Here GET is required. Google will redirect with GET.
-  return passport.authenticate('google', {
+  passport.authenticate('google', {
     successRedirect: '/secrets',
     failureRedirect: '/login',
   })(req, res, next);

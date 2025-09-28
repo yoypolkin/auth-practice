@@ -1,7 +1,7 @@
-import { AppUser } from './user.ts';
+import { SessionUser } from './user.ts';
 
 declare global {
   namespace Express {
-    interface User extends AppUser {}
+    interface User extends SessionUser {}
   }
 }
