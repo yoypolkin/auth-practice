@@ -5,10 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "pnpm nodemon dist/index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Illia Polovynko",
   "license": "ISC",
   "dependencies": {
     "@types/passport-google-oauth20": "^2.0.16",
